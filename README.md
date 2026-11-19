@@ -65,28 +65,5 @@ Numbers below come from the real dataset run (2,500 users). Reword them in your 
 | Can we predict a user's plan? | Logistic Regression: about 66% accuracy vs 40% baseline (5-fold CV) | Country-driven models can support market-level planning, but they are only moderately accurate for individual users. |
 | Are there distinct user segments? | K-Means silhouette about 0.17 | No clear segments in this data; avoid segment-based campaigns built on it. |
 
-**Limitations:** public Kaggle dataset (likely synthetic), no viewing or churn data, cross-sectional snapshot,
-association is not causation. Any business use would need real behavioural data.
 
-## Demo app
-```bash
-streamlit run app.py
-```
-Pick country, device, gender, age and tenure; the app shows the predicted plan with probabilities,
-plus the model's cross-validated accuracy against the baseline. It trains on your CSV in `data/` at startup.
-
-## Likely interview questions
-- **t-test vs chi-squared?** t-test compares means of a numeric variable between two groups; chi-squared tests association between two categorical variables.
-- **What is a p-value?** Probability of seeing a result at least this extreme if H0 were true. It is not the probability H0 is true.
-- **Student's vs Welch's t-test?** Student's assumes equal variances; Welch's does not and is the safer default.
-- **t-test assumptions?** Independent observations, roughly normal data (fine for large n by the CLT), equal variance (Student's only).
-- **Chi-squared assumptions?** Independent observations, expected count >= 5 in each cell.
-- **Why Bonferroni?** Each extra test raises the chance of a false positive; 20 tests at 0.05 gives about a 64% chance of at least one. Bonferroni divides alpha by the number of tests.
-- **Significant but tiny effect?** With large n, tiny differences become significant; that is why Cohen's d / Cramer's V matter.
-- **Why can't you use a t-test across 4 devices?** Use ANOVA (or pairwise t-tests with correction).
-- **What is target leakage?** Using a feature that already encodes the answer (Monthly Revenue reveals the plan), which gives falsely high accuracy.
-- **Why a baseline?** Accuracy means nothing alone; with 3 classes, always guessing the most common one already scores about 37-40%.
-- **Why cross-validation?** One train/test split can be lucky or unlucky; averaging over 5 folds gives a steadier estimate.
-- **How did you pick k in K-Means?** Silhouette score; it measures how well separated the clusters are (-1 to 1).
-- **Why is the model weak?** The features may simply not predict the plan, which matches non-significant chi-squared results. Say that honestly.
-- **Limitations?** Cross-sectional data, synthetic-looking Kaggle dataset, correlation is not causation.
+ooking Kaggle dataset, correlation is not causation.
